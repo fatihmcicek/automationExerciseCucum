@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,24 +13,19 @@ import utilities.Driver;
 import java.time.Duration;
 import java.util.List;
 
-public class BasePage {
+public abstract class BasePage {
 
     WebDriver driver = Driver.getDriver();
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-    Actions action = new Actions(driver);
 
-    // CheckUrl Section
     public void checkUrl(String url, String text) {
         Assert.assertEquals(url, text);
     }
 
-    // Click Function
     public void click(By key) {
         wait.until(ExpectedConditions.elementToBeClickable(key)).click();
     }
 
-    // Check Element Page
-    // -------------------------------------------
     public void checkElementWithText(By key, String text) {
         boolean find = false;
         List<WebElement> elements = findElements(key);
@@ -80,8 +74,5 @@ public class BasePage {
         Select slc = new Select(product);
         slc.selectByVisibleText(element);
     }
-
-    // -------------------------------------------
-
 
 }

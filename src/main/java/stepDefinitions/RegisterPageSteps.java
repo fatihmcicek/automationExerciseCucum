@@ -1,9 +1,11 @@
 package stepDefinitions;
 
 import PageObjectModel.RegisterPage;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import utilities.Driver;
 
 public class RegisterPageSteps {
 
@@ -77,6 +79,20 @@ public class RegisterPageSteps {
     @Then("Verify that {string} is visible and click Continue button")
     public void verify_that_is_visible_and_click_continue_button(String text) throws InterruptedException {
         registerPage.verify_that_is_visible_and_click_continue_button(text);
+    }
+
+    @And("Enter name and already registered email address")
+    public void enterNameAndAlreadyRegisteredEmailAddress() {
+        registerPage.enterNameAndAlreadyRegisteredEmailAddress();
+    }
+    @Then("Verify errorr {string} is visible")
+    public void verifyErrorrEmailAddressAlreadyExistIsVisible(String text) {
+        registerPage.verifyErrorrEmailAddressAlreadyExistIsVisible(text);
+    }
+
+    @After
+    public void close() {
+        Driver.TearDown();
     }
 
 }

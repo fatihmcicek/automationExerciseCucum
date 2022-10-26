@@ -7,13 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.Driver;
 
 public class RegisterPage extends BasePage {
 
     WebDriver driver;
-    WebDriverWait wait;
     Actions actions;
     Faker faker = new Faker();
 
@@ -48,7 +46,6 @@ public class RegisterPage extends BasePage {
         checkElementWithText(verify_new_user_signup_is_visibleElement, "New User Signup!");
     }
 
-    // New User SignUp Text Area
     By nameElement = By.xpath(("//input[@type='text']"));
     WebElement changeElement;
 
@@ -61,21 +58,18 @@ public class RegisterPage extends BasePage {
                 .sendKeys(faker.internet().emailAddress()).perform();
     }
 
-    // New User SignUp Text Click
-    By click_signup_buttonElement = By.xpath("//button[contains(text(),'Signup')]");
+    By click_signup_buttonElement = By.cssSelector("button[data-qa='signup-button']");
 
     public void click_signup_button() {
         click(click_signup_buttonElement);
     }
 
-    // Verify Page
     By verify_that_is_visibleElement = By.xpath("//b[contains(text(),'Enter Account Information')]");
 
     public void verify_that_is_visible(String text) {
         checkElementWithText(verify_that_is_visibleElement, text);
     }
 
-    // Fill Form Page
     By genderElement = By.id("id_gender1");
     By passwordElement = By.id("password");
     By daysElement = By.id("days");
@@ -139,7 +133,6 @@ public class RegisterPage extends BasePage {
         sendKey(mobile_numberElement, mobile_number);
     }
 
-    // Create Account
     By continueElement = By.xpath("//button[contains(text(),'Create Account')]");
 
     public void click_create_button() {
@@ -148,14 +141,12 @@ public class RegisterPage extends BasePage {
         click(continueElement);
     }
 
-    // Verify Account
     By verifyThatIsVisibleElement = By.xpath("//b[contains(text(),'Account Created!')]");
 
     public void verifyThatIsVisible(String text) {
         checkElementWithText(verifyThatIsVisibleElement, text);
     }
 
-    // Click Continue Button
     By click_continue_buttonElement = By.xpath("//a[contains(text(),'Continue')]");
 
     public void click_continue_button() throws InterruptedException {
@@ -163,15 +154,13 @@ public class RegisterPage extends BasePage {
         click(click_continue_buttonElement);
     }
 
-    // Verify That Message
     By verifyThatIsVisibleeeElement = By.xpath("//a[contains(text(),' Logged in as ')]");
 
     public void verifyThatMessagee(String text) {
         checkElementWithText(verifyThatIsVisibleeeElement, text);
     }
 
-    // Delete Account
-    By click_delete_account_buttonElement = By.partialLinkText("Delete Accou");
+    By click_delete_account_buttonElement = By.cssSelector("a[href='/delete_account']");
 
     public void click_delete_account_button() {
         click(click_delete_account_buttonElement);
@@ -186,4 +175,17 @@ public class RegisterPage extends BasePage {
         click(continueButtonElement);
     }
 
+    public void enterNameAndAlreadyRegisteredEmailAddress() {
+        changeElement = findElement(nameElement);
+        actions.moveToElement(changeElement).click()
+                .sendKeys("notest123")
+                .sendKeys(Keys.TAB)
+                .sendKeys("notest123@gmail.com").perform();
+    }
+
+    By errorEmailAlreadyExistElement = By.xpath("//p[contains(text(),'Email Address already exist!')]");
+
+    public void verifyErrorrEmailAddressAlreadyExistIsVisible(String text) {
+        checkElementWithText(errorEmailAlreadyExistElement, text);
+    }
 }
